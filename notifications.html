@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Preferences - Real Estate Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .notifications-container {
+            max-width: 800px;
+            margin: 100px auto 50px;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .notifications-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .notifications-header h1 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .notifications-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .notification-section {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .notification-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .notification-option:last-child {
+            border-bottom: none;
+        }
+
+        .option-info {
+            flex: 1;
+        }
+
+        .option-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .option-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: var(--border-color);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--gradient-primary);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(30px);
+        }
+
+        .frequency-selector {
+            margin-top: 15px;
+            display: none;
+        }
+
+        .frequency-selector.active {
+            display: block;
+        }
+
+        .frequency-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .frequency-option {
+            padding: 8px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .frequency-option.selected {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .email-settings {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .save-button {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .save-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .save-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .test-notification {
+            background: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .test-button {
+            background: var(--gradient-secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .test-button:hover {
+            transform: translateY(-1px);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--accent-color);
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .back-link i {
+            margin-right: 8px;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .notifications-container {
+                margin: 80px 20px 20px;
+                padding: 20px;
+            }
+
+            .notifications-header h1 {
+                font-size: 2rem;
+            }
+
+            .notification-option {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .toggle-switch {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <h2>Real Estate Hub</h2>
+                </div>
+                <div class="nav-controls">
+                    <div class="auth-buttons">
+                        <button class="auth-btn login-btn" id="loginBtn" onclick="window.location.href='login.html'">Login</button>
+                        <button class="auth-btn signup-btn" id="signupBtn" onclick="window.location.href='signup.html'">Sign Up</button>
+                        <button class="auth-btn logout-btn" id="logoutBtn" onclick="signOutUser()" style="display: none;">Logout</button>
+                    </div>
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="notifications-container">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
+
+            <div class="notifications-header">
+                <h1><i class="fas fa-bell"></i> Notification Preferences</h1>
+                <p>Customize how and when you receive property alerts</p>
+            </div>
+
+            <!-- Bidding War Alerts -->
+            <div class="notification-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="section-title">Bidding War Alerts</div>
+                </div>
+
+                <div class="notification-option">
+                    <div class="option-info">
+                        <div class="option-title">High Competition Alerts</div>
+                        <div class="option-description">Get notified when properties you liked receive high interest from other buyers</div>
+                    </div>
+                    <div class="toggle-switch" data-setting="biddingWar">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="frequency-selector" data-for="biddingWar">
+                    <label style="color: var(--text-secondary); font-size: 0.9rem;">Alert Frequency:</label>
+                    <div class="frequency-options">
+                        <div class="frequency-option" data-value="immediate">Immediate</div>
+                        <div class="frequency-option" data-value="hourly">Hourly</div>
+                        <div class="frequency-option" data-value="daily">Daily</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Drop Alerts -->
+            <div class="notification-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="section-title">Price Drop Alerts</div>
+                </div>
+
+                <div class="notification-option">
+                    <div class="option-info">
+                        <div class="option-title">Price Reduction Notifications</div>
+                        <div class="option-description">Get alerted when properties you're watching drop in price</div>
+                    </div>
+                    <div class="toggle-switch" data-setting="priceDrops">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="frequency-selector" data-for="priceDrops">
+                    <label style="color: var(--text-secondary); font-size: 0.9rem;">Alert Frequency:</label>
+                    <div class="frequency-options">
+                        <div class="frequency-option" data-value="immediate">Immediate</div>
+                        <div class="frequency-option" data-value="daily">Daily</div>
+                        <div class="frequency-option" data-value="weekly">Weekly</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Property Alerts -->
+            <div class="notification-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="section-title">Similar Property Alerts</div>
+                </div>
+
+                <div class="notification-option">
+                    <div class="option-info">
+                        <div class="option-title">New Similar Listings</div>
+                        <div class="option-description">Get notified when new properties similar to your liked ones are listed</div>
+                    </div>
+                    <div class="toggle-switch" data-setting="similarProperties">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="frequency-selector" data-for="similarProperties">
+                    <label style="color: var(--text-secondary); font-size: 0.9rem;">Alert Frequency:</label>
+                    <div class="frequency-options">
+                        <div class="frequency-option" data-value="immediate">Immediate</div>
+                        <div class="frequency-option" data-value="daily">Daily</div>
+                        <div class="frequency-option" data-value="weekly">Weekly</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Updates -->
+            <div class="notification-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="section-title">Market Updates</div>
+                </div>
+
+                <div class="notification-option">
+                    <div class="option-info">
+                        <div class="option-title">Market Trend Reports</div>
+                        <div class="option-description">Receive weekly market analysis and trends for your areas of interest</div>
+                    </div>
+                    <div class="toggle-switch" data-setting="marketUpdates">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="frequency-selector" data-for="marketUpdates">
+                    <label style="color: var(--text-secondary); font-size: 0.9rem;">Report Frequency:</label>
+                    <div class="frequency-options">
+                        <div class="frequency-option" data-value="weekly">Weekly</div>
+                        <div class="frequency-option" data-value="monthly">Monthly</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Settings -->
+            <div class="notification-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="section-title">Email Settings</div>
+                </div>
+
+                <div class="email-settings">
+                    <label style="color: var(--text-primary); font-weight: 600;">Notification Email:</label>
+                    <input type="email" class="email-input" id="notificationEmail" placeholder="Enter your email address">
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 10px;">
+                        This email will be used for all property notifications. Make sure it's an address you check regularly.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Test Notifications -->
+            <div class="test-notification">
+                <h3 style="color: var(--text-primary); margin-bottom: 15px;">Test Your Notifications</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 15px;">Send yourself a test notification to make sure everything is working</p>
+                <button class="test-button" onclick="sendTestNotification('biddingWar')">Test Bidding War Alert</button>
+                <button class="test-button" onclick="sendTestNotification('priceDrop')">Test Price Drop Alert</button>
+                <button class="test-button" onclick="sendTestNotification('similar')">Test Similar Property Alert</button>
+            </div>
+
+            <button class="save-button" onclick="saveNotificationPreferences()">
+                <i class="fas fa-save"></i> Save Preferences
+            </button>
+
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> Your notification preferences have been saved successfully!
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+    <script src="property-tracker.js"></script>
+    <script src="email-service.js"></script>
+    <script>
+        // Initialize services
+        const propertyTracker = new PropertyTracker();
+        const emailService = new EmailService();
+
+        // Load current preferences on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNotificationPreferences();
+            setupToggleListeners();
+            setupFrequencyListeners();
+            loadUserEmail();
+        });
+
+        // Load current notification preferences
+        function loadNotificationPreferences() {
+            const preferences = propertyTracker.getNotificationPreferences();
+            
+            // Set toggle states
+            Object.keys(preferences).forEach(setting => {
+                const toggle = document.querySelector(`[data-setting="${setting}"]`);
+                if (toggle) {
+                    if (preferences[setting]) {
+                        toggle.classList.add('active');
+                        // Show frequency selector if enabled
+                        const frequencySelector = document.querySelector(`[data-for="${setting}"]`);
+                        if (frequencySelector) {
+                            frequencySelector.classList.add('active');
+                        }
+                    }
+                }
+            });
+
+            // Load frequency preferences
+            const frequencies = JSON.parse(localStorage.getItem('notificationFrequencies') || '{}');
+            Object.keys(frequencies).forEach(setting => {
+                const frequencyOptions = document.querySelectorAll(`[data-for="${setting}"] .frequency-option`);
+                frequencyOptions.forEach(option => {
+                    if (option.dataset.value === frequencies[setting]) {
+                        option.classList.add('selected');
+                    }
+                });
+            });
+        }
+
+        // Setup toggle listeners
+        function setupToggleListeners() {
+            const toggles = document.querySelectorAll('.toggle-switch');
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const setting = this.dataset.setting;
+                    const isActive = this.classList.contains('active');
+                    
+                    if (isActive) {
+                        this.classList.remove('active');
+                        // Hide frequency selector
+                        const frequencySelector = document.querySelector(`[data-for="${setting}"]`);
+                        if (frequencySelector) {
+                            frequencySelector.classList.remove('active');
+                        }
+                    } else {
+                        this.classList.add('active');
+                        // Show frequency selector
+                        const frequencySelector = document.querySelector(`[data-for="${setting}"]`);
+                        if (frequencySelector) {
+                            frequencySelector.classList.add('active');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Setup frequency listeners
+        function setupFrequencyListeners() {
+            const frequencyOptions = document.querySelectorAll('.frequency-option');
+            frequencyOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from siblings
+                    const siblings = this.parentElement.querySelectorAll('.frequency-option');
+                    siblings.forEach(sibling => sibling.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                });
+            });
+        }
+
+        // Load user email
+        function loadUserEmail() {
+            const user = getCurrentUser();
+            if (user && user.email) {
+                document.getElementById('notificationEmail').value = user.email;
+            }
+        }
+
+        // Save notification preferences
+        function saveNotificationPreferences() {
+            const saveButton = document.querySelector('.save-button');
+            saveButton.disabled = true;
+            saveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+            try {
+                // Collect toggle states
+                const preferences = {};
+                const toggles = document.querySelectorAll('.toggle-switch');
+                toggles.forEach(toggle => {
+                    const setting = toggle.dataset.setting;
+                    preferences[setting] = toggle.classList.contains('active');
+                });
+
+                // Collect frequency preferences
+                const frequencies = {};
+                const frequencySelectors = document.querySelectorAll('.frequency-selector');
+                frequencySelectors.forEach(selector => {
+                    const setting = selector.dataset.for;
+                    const selectedOption = selector.querySelector('.frequency-option.selected');
+                    if (selectedOption) {
+                        frequencies[setting] = selectedOption.dataset.value;
+                    }
+                });
+
+                // Save preferences
+                propertyTracker.updateNotificationPreferences(preferences);
+                localStorage.setItem('notificationFrequencies', JSON.stringify(frequencies));
+
+                // Save email
+                const email = document.getElementById('notificationEmail').value;
+                if (email) {
+                    localStorage.setItem('notificationEmail', email);
+                }
+
+                // Show success message
+                const successMessage = document.getElementById('successMessage');
+                successMessage.classList.add('show');
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 3000);
+
+                console.log('Notification preferences saved:', preferences);
+                console.log('Frequency preferences saved:', frequencies);
+
+            } catch (error) {
+                console.error('Error saving preferences:', error);
+                alert('Error saving preferences. Please try again.');
+            } finally {
+                saveButton.disabled = false;
+                saveButton.innerHTML = '<i class="fas fa-save"></i> Save Preferences';
+            }
+        }
+
+        // Send test notification
+        async function sendTestNotification(type) {
+            const email = document.getElementById('notificationEmail').value;
+            if (!email) {
+                alert('Please enter your email address first');
+                return;
+            }
+
+            try {
+                const testProperty = {
+                    id: 'test-123',
+                    address: '123 Test Street, Test City, TC 12345',
+                    price: 450000,
+                    oldPrice: 475000,
+                    bedrooms: 3,
+                    bathrooms: 2,
+                    sqft: 1800,
+                    image: 'https://via.placeholder.com/600x200?text=Test+Property'
+                };
+
+                const testWarningData = {
+                    views24h: 45,
+                    totalLikes: 12,
+                    similarSold: 4,
+                    competitionLevel: 'high',
+                    warningLevel: 'high'
+                };
+
+                switch (type) {
+                    case 'biddingWar':
+                        await emailService.sendBiddingWarWarning(email, testProperty, testWarningData);
+                        break;
+                    case 'priceDrop':
+                        await emailService.sendPriceDropAlert(email, testProperty);
+                        break;
+                    case 'similar':
+                        await emailService.sendSimilarPropertyAlert(email, testProperty, {
+                            ...testProperty,
+                            id: 'test-456',
+                            address: '456 Similar Street, Test City, TC 12345',
+                            price: 440000
+                        });
+                        break;
+                }
+
+                alert(`Test ${type} notification sent to ${email}!`);
+            } catch (error) {
+                console.error('Error sending test notification:', error);
+                alert('Error sending test notification. Please check your email address and try again.');
+            }
+        }
+
+        // Theme toggle function
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            const themeIcon = document.querySelector('.theme-toggle i');
+            themeIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.querySelector('.theme-toggle i').className = 'fas fa-sun';
+        }
+    </script>
+</body>
+</html>

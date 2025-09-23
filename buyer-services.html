@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Services - Real Estate Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .buyer-services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .services-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .services-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .services-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .service-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .service-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 25px;
+        }
+
+        .service-features li {
+            padding: 8px 0;
+            color: #555;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .service-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .service-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .quick-actions {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .quick-actions h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .action-btn {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 15px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .status-new {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-popular {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status-premium {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        @media (max-width: 768px) {
+            .buyer-services-container {
+                padding: 10px;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .service-card {
+                padding: 20px;
+            }
+            
+            .services-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='index.html'">
+        ← Back to Dashboard
+    </button>
+
+    <div class="buyer-services-container">
+        <div class="services-header">
+            <h1>🏠 Buyer Services</h1>
+            <p>Comprehensive solutions for your property acquisition journey</p>
+        </div>
+
+        <div class="quick-actions">
+            <h2>Quick Actions</h2>
+            <div class="action-buttons">
+                <button class="action-btn" onclick="openCashOfferCalculator()">
+                    💰 Get Cash Offer
+                </button>
+                <button class="action-btn" onclick="openMortgageCalculator()">
+                    🏦 Calculate Mortgage
+                </button>
+                <button class="action-btn" onclick="openAIAssistant()">
+                    🤖 AI Acquisition Help
+                </button>
+                <button class="action-btn" onclick="openPropertyComparison()">
+                    📊 Compare Properties
+                </button>
+                <button class="action-btn" onclick="openPreApproval()">
+                    ✅ Get Pre-Approved
+                </button>
+                <button class="action-btn" onclick="openMarketAnalysis()">
+                    📈 Market Analysis
+                </button>
+            </div>
+        </div>
+
+        <div class="services-grid">
+            <!-- Opendoor Cash Offers -->
+            <div class="service-card">
+                <div class="service-icon">💰</div>
+                <h3>Opendoor Cash Offers <span class="status-badge status-popular">Popular</span></h3>
+                <p>Get instant cash offers on properties with Opendoor's innovative platform. Skip the traditional financing hassles and close faster.</p>
+                <ul class="service-features">
+                    <li>Instant cash offer estimates</li>
+                    <li>No financing contingencies</li>
+                    <li>Close in as little as 14 days</li>
+                    <li>Competitive market pricing</li>
+                    <li>Transparent fee structure</li>
+                </ul>
+                <button class="service-btn" onclick="openOpendoorService()">
+                    Get Cash Offer Now
+                </button>
+            </div>
+
+            <!-- Mortgage & Financing -->
+            <div class="service-card">
+                <div class="service-icon">🏦</div>
+                <h3>Mortgage & Financing <span class="status-badge status-new">Enhanced</span></h3>
+                <p>Comprehensive mortgage solutions with competitive rates and personalized service from our network of trusted lenders.</p>
+                <ul class="service-features">
+                    <li>Multiple lender comparison</li>
+                    <li>Pre-approval in 24 hours</li>
+                    <li>FHA, VA, and conventional loans</li>
+                    <li>First-time buyer programs</li>
+                    <li>Rate lock guarantees</li>
+                </ul>
+                <button class="service-btn" onclick="openMortgageService()">
+                    Explore Financing
+                </button>
+            </div>
+
+            <!-- AI Acquisition Assistant -->
+            <div class="service-card">
+                <div class="service-icon">🤖</div>
+                <h3>AI Acquisition Assistant <span class="status-badge status-premium">Premium</span></h3>
+                <p>Advanced AI-powered guidance for your property acquisition journey, from search to closing.</p>
+                <ul class="service-features">
+                    <li>Personalized property recommendations</li>
+                    <li>Market trend analysis</li>
+                    <li>Investment potential scoring</li>
+                    <li>Negotiation strategy advice</li>
+                    <li>Document preparation help</li>
+                </ul>
+                <button class="service-btn" onclick="openAIAcquisitionAssistant()">
+                    Start AI Consultation
+                </button>
+            </div>
+
+            <!-- Property Comparison Tools -->
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3>Property Comparison Tools</h3>
+                <p>Advanced analytics and comparison tools to help you make informed decisions about your property investments.</p>
+                <ul class="service-features">
+                    <li>Side-by-side property analysis</li>
+                    <li>ROI and cash flow projections</li>
+                    <li>Neighborhood comparisons</li>
+                    <li>Market value assessments</li>
+                    <li>Risk analysis reports</li>
+                </ul>
+                <button class="service-btn" onclick="openComparisonTools()">
+                    Compare Properties
+                </button>
+            </div>
+
+            <!-- Buyer Protection Services -->
+            <div class="service-card">
+                <div class="service-icon">🛡️</div>
+                <h3>Buyer Protection Services</h3>
+                <p>Comprehensive protection and support throughout your buying process with expert guidance and insurance options.</p>
+                <ul class="service-features">
+                    <li>Home inspection coordination</li>
+                    <li>Title insurance assistance</li>
+                    <li>Legal document review</li>
+                    <li>Closing cost protection</li>
+                    <li>Post-purchase support</li>
+                </ul>
+                <button class="service-btn" onclick="openProtectionServices()">
+                    Learn More
+                </button>
+            </div>
+
+            <!-- Market Analysis -->
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3>Market Analysis <span class="status-badge status-new">New</span></h3>
+                <p>Comprehensive market insights and analytics to help you understand local real estate trends and make informed buying decisions.</p>
+                <ul class="service-features">
+                    <li>Local market trends and statistics</li>
+                    <li>Price per square foot analysis</li>
+                    <li>Neighborhood growth projections</li>
+                    <li>Comparable sales data</li>
+                    <li>Market timing recommendations</li>
+                    <li>School district and amenity ratings</li>
+                </ul>
+                <button class="service-btn" onclick="openMarketAnalysisDashboard()">
+                    View Market Analysis
+                </button>
+            </div>
+
+            <!-- Investment Analysis -->
+            <div class="service-card">
+                <div class="service-icon">📈</div>
+                <h3>Investment Analysis <span class="status-badge status-premium">Premium</span></h3>
+                <p>Professional investment analysis tools and expert insights to maximize your real estate investment returns.</p>
+                <ul class="service-features">
+                    <li>Cap rate calculations</li>
+                    <li>Cash-on-cash return analysis</li>
+                    <li>Market appreciation forecasts</li>
+                    <li>Rental income projections</li>
+                    <li>Tax benefit analysis</li>
+                </ul>
+                <button class="service-btn" onclick="openInvestmentAnalysis()">
+                    Analyze Investment
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Service navigation functions
+        function openOpendoorService() {
+            window.location.href = 'opendoor-service.html';
+        }
+
+        function openMortgageService() {
+            window.location.href = 'mortgage-service.html';
+        }
+
+        function openAIAcquisitionAssistant() {
+            window.location.href = 'ai-chat.html?mode=acquisition';
+        }
+
+        function openComparisonTools() {
+            window.location.href = 'property-comparison.html';
+        }
+
+        function openProtectionServices() {
+            alert('Buyer Protection Services coming soon! Contact our team for immediate assistance.');
+        }
+
+        function openInvestmentAnalysis() {
+            alert('Investment Analysis tools coming soon! Use our AI Assistant for preliminary analysis.');
+        }
+
+        // Quick action functions
+        function openCashOfferCalculator() {
+            window.location.href = 'opendoor-service.html#calculator';
+        }
+
+        function openMortgageCalculator() {
+            window.location.href = 'mortgage-service.html#calculator';
+        }
+
+        function openAIAssistant() {
+            window.location.href = 'ai-chat.html?context=buyer-services';
+        }
+
+        function openPropertyComparison() {
+            window.location.href = 'property-comparison.html';
+        }
+
+        function openPreApproval() {
+            window.location.href = 'mortgage-service.html#preapproval';
+        }
+
+        function openMarketAnalysis() {
+            window.location.href = 'analytics-dashboard.html';
+        }
+
+        function openMarketAnalysisDashboard() {
+            window.location.href = 'analytics-dashboard.html?focus=market-analysis';
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scroll behavior
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+            // Add entrance animations
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

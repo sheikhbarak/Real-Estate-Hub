@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Real Estate Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-gradient);
+            padding: var(--spacing-lg);
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            padding: var(--spacing-3xl);
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .auth-logo {
+            font-size: 3rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .auth-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .auth-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-input.error {
+            border-color: #f56565;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .auth-divider {
+            text-align: center;
+            margin: var(--spacing-lg) 0;
+            position: relative;
+            color: var(--text-muted);
+        }
+
+        .auth-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .auth-divider span {
+            background: var(--bg-card);
+            padding: 0 var(--spacing-md);
+        }
+
+        .auth-links {
+            text-align: center;
+        }
+
+        .auth-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .auth-link:hover {
+            color: #764ba2;
+        }
+
+        .error-message {
+            background: #fed7d7;
+            color: #c53030;
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--spacing-lg);
+            font-size: 0.875rem;
+        }
+
+        .success-message {
+            background: #c6f6d5;
+            color: #2d7d32;
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--spacing-lg);
+            font-size: 0.875rem;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .back-to-home {
+            position: absolute;
+            top: var(--spacing-lg);
+            left: var(--spacing-lg);
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home">
+        <i class="fas fa-arrow-left"></i>
+        Back to Home
+    </a>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Sign in to your Real Estate Hub account</p>
+            </div>
+
+            <form id="loginForm">
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+                <div id="successMessage" class="success-message" style="display: none;"></div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" required>
+                </div>
+
+                <button type="submit" class="btn-primary" id="loginBtn">
+                    <span id="loginText">Sign In</span>
+                    <span id="loginLoader" class="loading" style="display: none;"></span>
+                </button>
+            </form>
+
+            <div class="auth-divider">
+                <span>or</span>
+            </div>
+
+            <div class="auth-links">
+                <p>Don't have an account? <a href="signup.html" class="auth-link">Sign up here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const loginText = document.getElementById('loginText');
+            const loginLoader = document.getElementById('loginLoader');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+
+            // Reset messages
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+
+            // Show loading state
+            loginBtn.disabled = true;
+            loginText.style.display = 'none';
+            loginLoader.style.display = 'inline-block';
+
+            try {
+                const result = await signInUser(email, password);
+                
+                if (result.success) {
+                    successMessage.textContent = 'Login successful! Redirecting...';
+                    successMessage.style.display = 'block';
+                    
+                    // Redirect to main app after short delay
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    errorMessage.textContent = result.error;
+                    errorMessage.style.display = 'block';
+                }
+            } catch (error) {
+                errorMessage.textContent = 'An unexpected error occurred. Please try again.';
+                errorMessage.style.display = 'block';
+            } finally {
+                // Reset loading state
+                loginBtn.disabled = false;
+                loginText.style.display = 'inline-block';
+                loginLoader.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

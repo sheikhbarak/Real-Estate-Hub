@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Hub - Your Dream Home Awaits</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgcviAktfWLSG2ko6LSY7IRfXgrYW_a3Y&callback=initMap"></script>
+</head>
+<body>
+    <!-- Fixed Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-home"></i>
+                <span>Real Estate Hub</span>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" data-section="search">
+                    <i class="fas fa-search"></i>
+                    <span>Search</span>
+                </button>
+                <button class="nav-item" data-section="compare">
+                    <i class="fas fa-balance-scale"></i>
+                    <span>Compare</span>
+                </button>
+                <button class="nav-item" data-section="market-analysis">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Market Analysis</span>
+                </button>
+                <button class="nav-item" data-section="account">
+                    <i class="fas fa-user"></i>
+                    <span>Account</span>
+                </button>
+                <button class="nav-item" data-section="community">
+                    <i class="fas fa-users"></i>
+                    <span>Community</span>
+                </button>
+            </nav>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back! Here's your real estate overview</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>1,247</h3>
+                            <p>Properties Available</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>$450K</h3>
+                            <p>Average Price</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-up"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>+12%</h3>
+                            <p>Market Growth</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>89</h3>
+                            <p>Properties Viewed</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-content">
+                    <div class="recent-properties">
+                        <h2>Recently Viewed Properties</h2>
+                        <div class="property-list">
+                            <div class="property-item">
+                                <div class="property-image">
+                                    <div class="placeholder-image">🏠</div>
+                                </div>
+                                <div class="property-details">
+                                    <h3>Modern Downtown Apartment</h3>
+                                    <p>2 bed • 2 bath • 1,200 sq ft</p>
+                                    <span class="price">$425,000</span>
+                                </div>
+                            </div>
+                            <div class="property-item">
+                                <div class="property-image">
+                                    <div class="placeholder-image">🏡</div>
+                                </div>
+                                <div class="property-details">
+                                    <h3>Suburban Family Home</h3>
+                                    <p>4 bed • 3 bath • 2,500 sq ft</p>
+                                    <span class="price">$675,000</span>
+                                </div>
+                            </div>
+                            <div class="property-item">
+                                <div class="property-image">
+                                    <div class="placeholder-image">🏢</div>
+                                </div>
+                                <div class="property-details">
+                                    <h3>Luxury Penthouse</h3>
+                                    <p>3 bed • 2 bath • 1,800 sq ft</p>
+                                    <span class="price">$850,000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="market-trends">
+                        <h2>Market Trends</h2>
+                        <div class="trend-chart">
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-line"></i>
+                                <p>Market trends visualization would go here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search Section -->
+            <section id="search" class="content-section">
+                <div class="section-header">
+                    <h1>Search Properties</h1>
+                    <p>Find your perfect home</p>
+                </div>
+                
+                <div class="search-filters">
+                    <div class="filter-group">
+                        <label>Location</label>
+                        <input type="text" placeholder="Enter city, neighborhood, or ZIP">
+                    </div>
+                    <div class="filter-group">
+                        <label>Price Range</label>
+                        <select>
+                            <option>Any Price</option>
+                            <option>$0 - $300K</option>
+                            <option>$300K - $500K</option>
+                            <option>$500K - $750K</option>
+                            <option>$750K+</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Property Type</label>
+                        <select>
+                            <option>All Types</option>
+                            <option>House</option>
+                            <option>Apartment</option>
+                            <option>Condo</option>
+                            <option>Townhouse</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Bedrooms</label>
+                        <select>
+                            <option>Any</option>
+                            <option>1+</option>
+                            <option>2+</option>
+                            <option>3+</option>
+                            <option>4+</option>
+                        </select>
+                    </div>
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </button>
+                </div>
+
+                <div class="search-results">
+                    <div class="results-header">
+                        <h2>1,247 Properties Found</h2>
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="grid">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                            <button class="view-btn" data-view="list">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="properties-grid">
+                        <div class="property-card">
+                            <div class="property-comparison-checkbox">
+                                <input type="checkbox" id="property-1" class="comparison-checkbox" 
+                                       onchange="togglePropertyComparison(this, {
+                                           id: 'property-1',
+                                           title: 'Beautiful Family Home',
+                                           address: '123 Maple Street, Downtown District, CA 90210',
+                                           price: '$525,000',
+                                           beds: '3',
+                                           baths: '2',
+                                           sqft: '1,800',
+                                           type: 'Single Family',
+                                           year: '2020',
+                                           image: '🏠'
+                                       })">
+                                <label for="property-1" class="comparison-label">
+                                    <i class="fas fa-balance-scale"></i>
+                                    Compare
+                                </label>
+                            </div>
+                            <div class="property-image">
+                                <div class="placeholder-image">🏠</div>
+                                <div class="property-badge">New</div>
+                            </div>
+                            <div class="property-info">
+                                <h3>Beautiful Family Home</h3>
+                                <p class="location">📍 Downtown District</p>
+                                <p class="specs">3 bed • 2 bath • 1,800 sq ft</p>
+                                <div class="property-footer">
+                                    <span class="price">$525,000</span>
+                                    <button class="favorite-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                                <button class="btn btn-primary property-details-btn" onclick="showPropertyDetails({
+                                    title: 'Beautiful Family Home',
+                                    address: '123 Maple Street, Downtown District, CA 90210',
+                                    price: '$525,000'
+                                })">
+                                    <i class="fas fa-info-circle"></i>
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="property-card">
+                            <div class="property-comparison-checkbox">
+                                <input type="checkbox" id="property-2" class="comparison-checkbox" 
+                                       onchange="togglePropertyComparison(this, {
+                                           id: 'property-2',
+                                           title: 'Modern City Apartment',
+                                           address: '456 Business Ave, Business District, CA 90211',
+                                           price: '$395,000',
+                                           beds: '2',
+                                           baths: '1',
+                                           sqft: '1,100',
+                                           type: 'Apartment',
+                                           year: '2019',
+                                           image: '🏢'
+                                       })">
+                                <label for="property-2" class="comparison-label">
+                                    <i class="fas fa-balance-scale"></i>
+                                    Compare
+                                </label>
+                            </div>
+                            <div class="property-image">
+                                <div class="placeholder-image">🏢</div>
+                                <div class="property-badge">Featured</div>
+                            </div>
+                            <div class="property-info">
+                                <h3>Modern City Apartment</h3>
+                                <p class="location">📍 Business District</p>
+                                <p class="specs">2 bed • 1 bath • 1,100 sq ft</p>
+                                <div class="property-footer">
+                                    <span class="price">$395,000</span>
+                                    <button class="favorite-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="property-card">
+                            <div class="property-comparison-checkbox">
+                                <input type="checkbox" id="property-3" class="comparison-checkbox" 
+                                       onchange="togglePropertyComparison(this, {
+                                           id: 'property-3',
+                                           title: 'Cozy Suburban House',
+                                           address: '789 Maple Heights Dr, Maple Heights, CA 90212',
+                                           price: '$645,000',
+                                           beds: '4',
+                                           baths: '3',
+                                           sqft: '2,200',
+                                           type: 'Single Family',
+                                           year: '2017',
+                                           image: '🏡'
+                                       })">
+                                <label for="property-3" class="comparison-label">
+                                    <i class="fas fa-balance-scale"></i>
+                                    Compare
+                                </label>
+                            </div>
+                            <div class="property-image">
+                                <div class="placeholder-image">🏡</div>
+                            </div>
+                            <div class="property-info">
+                                <h3>Cozy Suburban House</h3>
+                                <p class="location">📍 Maple Heights</p>
+                                <p class="specs">4 bed • 3 bath • 2,200 sq ft</p>
+                                <div class="property-footer">
+                                    <span class="price">$645,000</span>
+                                    <button class="favorite-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="property-card">
+                            <div class="property-image">
+                                <div class="placeholder-image">🏠</div>
+                            </div>
+                            <div class="property-info">
+                                <h3>Luxury Villa</h3>
+                                <p class="location">📍 Hillside Estates</p>
+                                <p class="specs">5 bed • 4 bath • 3,500 sq ft</p>
+                                <div class="property-footer">
+                                    <span class="price">$1,250,000</span>
+                                    <button class="favorite-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="property-card">
+                            <div class="property-image">
+                                <div class="placeholder-image">🏢</div>
+                            </div>
+                            <div class="property-info">
+                                <h3>Studio Loft</h3>
+                                <p class="location">📍 Arts District</p>
+                                <p class="specs">1 bed • 1 bath • 750 sq ft</p>
+                                <div class="property-footer">
+                                    <span class="price">$285,000</span>
+                                    <button class="favorite-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="property-card">
+                            <div class="property-image">
+                                <div class="placeholder-image">🏡</div>
+                            </div>
+                            <div class="property-info">
+                                <h3>Townhouse</h3>
+                                <p class="location">📍 Riverside</p>
+                                <p class="specs">3 bed • 2.5 bath • 1,650 sq ft</p>
+                                <div class="property-footer">
+                                    <span class="price">$475,000</span>
+                                    <button class="favorite-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Account Section -->
+            <section id="account" class="content-section">
+                <div class="section-header">
+                    <h1>My Account</h1>
+                    <p>Manage your profile and preferences</p>
+                </div>
+                
+                <div class="account-content">
+                    <div class="profile-section">
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="profile-info">
+                                <h2>John Doe</h2>
+                                <p>john.doe@email.com</p>
+                                <span class="member-since">Member since March 2023</span>
+                            </div>
+                            <button class="edit-profile-btn">Edit Profile</button>
+                        </div>
+                        
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <h3>23</h3>
+                                <p>Properties Saved</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3>156</h3>
+                                <p>Properties Viewed</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3>8</h3>
+                                <p>Searches Saved</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-sections">
+                        <div class="account-card">
+                            <h3><i class="fas fa-heart"></i> Saved Properties</h3>
+                            <p>View and manage your favorite properties</p>
+                            <div class="saved-properties-preview">
+                                <div class="mini-property">
+                                    <span>🏠</span>
+                                    <div>
+                                        <p>Modern Downtown Apartment</p>
+                                        <small>$425,000</small>
+                                    </div>
+                                </div>
+                                <div class="mini-property">
+                                    <span>🏡</span>
+                                    <div>
+                                        <p>Suburban Family Home</p>
+                                        <small>$675,000</small>
+                                    </div>
+                                </div>
+                                <div class="mini-property">
+                                    <span>🏢</span>
+                                    <div>
+                                        <p>Luxury Penthouse</p>
+                                        <small>$850,000</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="view-all-btn">View All Saved</button>
+                        </div>
+                        
+                        <div class="account-card">
+                            <h3><i class="fas fa-search"></i> Saved Searches</h3>
+                            <p>Quick access to your frequent searches</p>
+                            <div class="saved-searches">
+                                <div class="search-item">
+                                    <span>Downtown Apartments under $500K</span>
+                                    <button class="run-search-btn">Run Search</button>
+                                </div>
+                                <div class="search-item">
+                                    <span>3+ bed houses in Suburbs</span>
+                                    <button class="run-search-btn">Run Search</button>
+                                </div>
+                                <div class="search-item">
+                                    <span>Condos near Metro Station</span>
+                                    <button class="run-search-btn">Run Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="account-card">
+                            <h3><i class="fas fa-bell"></i> Notifications</h3>
+                            <p>Manage your alert preferences</p>
+                            <div class="notification-settings">
+                                <div class="setting-item">
+                                    <label>
+                                        <input type="checkbox" checked>
+                                        <span>New properties matching saved searches</span>
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <label>
+                                        <input type="checkbox" checked>
+                                        <span>Price changes on saved properties</span>
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <label>
+                                        <input type="checkbox">
+                                        <span>Market reports and insights</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="account-card">
+                            <h3><i class="fas fa-cog"></i> Account Settings</h3>
+                            <p>Update your account information</p>
+                            <div class="settings-options">
+                                <button class="setting-option">
+                                    <i class="fas fa-key"></i>
+                                    Change Password
+                                </button>
+                                <button class="setting-option">
+                                    <i class="fas fa-envelope"></i>
+                                    Update Email
+                                </button>
+                                <button class="setting-option">
+                                    <i class="fas fa-shield-alt"></i>
+                                    Privacy Settings
+                                </button>
+                                <button class="setting-option">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Sign Out
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Community Section -->
+            <section id="community" class="content-section">
+                <div class="section-header">
+                    <h1>Community</h1>
+                    <p>Connect with other real estate enthusiasts</p>
+                </div>
+                
+                <div class="community-content">
+                    <div class="community-stats">
+                        <div class="community-stat">
+                            <h3>12,847</h3>
+                            <p>Active Members</p>
+                        </div>
+                        <div class="community-stat">
+                            <h3>2,156</h3>
+                            <p>Discussions</p>
+                        </div>
+                        <div class="community-stat">
+                            <h3>8,943</h3>
+                            <p>Posts Today</p>
+                        </div>
+                    </div>
+                    
+                    <div class="community-sections">
+                        <div class="forum-section">
+                            <h2>Popular Discussions</h2>
+                            <div class="discussion-list">
+                                <div class="discussion-item">
+                                    <div class="discussion-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="discussion-content">
+                                        <h3>Best neighborhoods for first-time buyers?</h3>
+                                        <p>Looking for advice on family-friendly areas with good schools...</p>
+                                        <div class="discussion-meta">
+                                            <span class="author">by Sarah Johnson</span>
+                                            <span class="time">2 hours ago</span>
+                                            <span class="replies">23 replies</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="discussion-item">
+                                    <div class="discussion-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="discussion-content">
+                                        <h3>Market predictions for 2024</h3>
+                                        <p>What are your thoughts on where the market is heading next year?</p>
+                                        <div class="discussion-meta">
+                                            <span class="author">by Mike Chen</span>
+                                            <span class="time">4 hours ago</span>
+                                            <span class="replies">45 replies</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="discussion-item">
+                                    <div class="discussion-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="discussion-content">
+                                        <h3>Home inspection tips and red flags</h3>
+                                        <p>Share your experiences and what to look out for during inspections...</p>
+                                        <div class="discussion-meta">
+                                            <span class="author">by Lisa Rodriguez</span>
+                                            <span class="time">6 hours ago</span>
+                                            <span class="replies">18 replies</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="discussion-item">
+                                    <div class="discussion-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="discussion-content">
+                                        <h3>Financing options for investment properties</h3>
+                                        <p>Exploring different loan types and strategies for real estate investing...</p>
+                                        <div class="discussion-meta">
+                                            <span class="author">by David Park</span>
+                                            <span class="time">8 hours ago</span>
+                                            <span class="replies">31 replies</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="community-sidebar">
+                            <div class="community-card">
+                                <h3>Forum Categories</h3>
+                                <div class="category-list">
+                                    <div class="category-item">
+                                        <i class="fas fa-home"></i>
+                                        <span>Buying & Selling</span>
+                                        <span class="post-count">1,234</span>
+                                    </div>
+                                    <div class="category-item">
+                                        <i class="fas fa-chart-line"></i>
+                                        <span>Market Analysis</span>
+                                        <span class="post-count">856</span>
+                                    </div>
+                                    <div class="category-item">
+                                        <i class="fas fa-tools"></i>
+                                        <span>Home Improvement</span>
+                                        <span class="post-count">642</span>
+                                    </div>
+                                    <div class="category-item">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        <span>Investment</span>
+                                        <span class="post-count">789</span>
+                                    </div>
+                                    <div class="category-item">
+                                        <i class="fas fa-gavel"></i>
+                                        <span>Legal & Contracts</span>
+                                        <span class="post-count">423</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="community-card">
+                                <h3>Top Contributors</h3>
+                                <div class="contributor-list">
+                                    <div class="contributor-item">
+                                        <div class="contributor-avatar">
+                                            <i class="fas fa-user-circle"></i>
+                                        </div>
+                                        <div class="contributor-info">
+                                            <span class="name">Alex Thompson</span>
+                                            <span class="title">Real Estate Agent</span>
+                                            <span class="posts">1,247 posts</span>
+                                        </div>
+                                    </div>
+                                    <div class="contributor-item">
+                                        <div class="contributor-avatar">
+                                            <i class="fas fa-user-circle"></i>
+                                        </div>
+                                        <div class="contributor-info">
+                                            <span class="name">Maria Garcia</span>
+                                            <span class="title">Property Investor</span>
+                                            <span class="posts">892 posts</span>
+                                        </div>
+                                    </div>
+                                    <div class="contributor-item">
+                                        <div class="contributor-avatar">
+                                            <i class="fas fa-user-circle"></i>
+                                        </div>
+                                        <div class="contributor-info">
+                                            <span class="name">Robert Kim</span>
+                                            <span class="title">Market Analyst</span>
+                                            <span class="posts">756 posts</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="community-card">
+                                <h3>Recent Activity</h3>
+                                <div class="activity-list">
+                                    <div class="activity-item">
+                                        <i class="fas fa-comment"></i>
+                                        <span>New reply in "Downtown Market Trends"</span>
+                                        <small>5 min ago</small>
+                                    </div>
+                                    <div class="activity-item">
+                                        <i class="fas fa-plus"></i>
+                                        <span>New discussion: "Mortgage Rate Changes"</span>
+                                        <small>12 min ago</small>
+                                    </div>
+                                    <div class="activity-item">
+                                        <i class="fas fa-heart"></i>
+                                        <span>Your post received 15 likes</span>
+                                        <small>1 hour ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Property Details Section -->
+            <section id="property-details" class="content-section">
+                <div class="property-details-container">
+                    <div class="property-details-header">
+                        <button class="back-btn" onclick="showSection('search')">
+                            <i class="fas fa-arrow-left"></i>
+                            Back to Search
+                        </button>
+                        <h1 id="property-title">Beautiful Family Home</h1>
+                        <p id="property-address">123 Maple Street, Downtown District, CA 90210</p>
+                    </div>
+
+                    <div class="property-details-content">
+                        <div class="property-main-info">
+                            <div class="property-gallery">
+                                <div class="main-image">
+                                    <div class="placeholder-image">🏠</div>
+                                </div>
+                                <div class="image-thumbnails">
+                                    <div class="thumbnail active">🏠</div>
+                                    <div class="thumbnail">🏡</div>
+                                    <div class="thumbnail">🏢</div>
+                                    <div class="thumbnail">🏘️</div>
+                                </div>
+                            </div>
+
+                            <div class="property-info-panel">
+                                <div class="price-section">
+                                    <span class="price" id="property-price">$525,000</span>
+                                    <span class="price-per-sqft">$292/sq ft</span>
+                                </div>
+
+                                <div class="property-specs">
+                                    <div class="spec-item">
+                                        <i class="fas fa-bed"></i>
+                                        <span>3 Bedrooms</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fas fa-bath"></i>
+                                        <span>2 Bathrooms</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fas fa-ruler-combined"></i>
+                                        <span>1,800 sq ft</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Built in 2018</span>
+                                    </div>
+                                </div>
+
+                                <div class="property-actions">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-phone"></i>
+                                        Contact Agent
+                                    </button>
+                                    <button class="btn btn-secondary">
+                                        <i class="fas fa-calendar-check"></i>
+                                        Schedule Tour
+                                    </button>
+                                    <button class="btn btn-secondary">
+                                        <i class="fas fa-heart"></i>
+                                        Save Property
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="property-details-tabs">
+                            <div class="tab-navigation">
+                                <button class="tab-btn active" onclick="showTab('overview')">Overview</button>
+                                <button class="tab-btn" onclick="showTab('location')">Location & Neighborhood</button>
+                                <button class="tab-btn" onclick="showTab('features')">Features</button>
+                                <button class="tab-btn" onclick="showTab('history')">Price History</button>
+                            </div>
+
+                            <div class="tab-content">
+                                <div id="overview-tab" class="tab-panel active">
+                                    <h3>Property Description</h3>
+                                    <p>This beautiful family home offers modern living in a prime location. With spacious rooms, updated fixtures, and a well-maintained exterior, this property is perfect for families looking for comfort and convenience. The open floor plan creates a seamless flow between the living areas, while the private backyard provides a peaceful retreat.</p>
+                                    
+                                    <h3>Key Features</h3>
+                                    <ul>
+                                        <li>Open concept living and dining area</li>
+                                        <li>Updated kitchen with granite countertops</li>
+                                        <li>Master suite with walk-in closet</li>
+                                        <li>Private backyard with patio</li>
+                                        <li>Two-car garage</li>
+                                        <li>Central air conditioning and heating</li>
+                                    </ul>
+                                </div>
+
+                                <div id="location-tab" class="tab-panel">
+                                    <h3>Location & Neighborhood</h3>
+                                    <div class="location-info">
+                                        <div class="address-section">
+                                            <h4>Address</h4>
+                                            <p id="full-address">123 Maple Street, Downtown District, CA 90210</p>
+                                        </div>
+
+                                        <div class="neighborhood-section">
+                                            <h4>Neighborhood Highlights</h4>
+                                            <div class="neighborhood-features">
+                                                <div class="feature-item">
+                                                    <i class="fas fa-graduation-cap"></i>
+                                                    <span>Excellent Schools Nearby</span>
+                                                </div>
+                                                <div class="feature-item">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                    <span>Shopping Centers</span>
+                                                </div>
+                                                <div class="feature-item">
+                                                    <i class="fas fa-subway"></i>
+                                                    <span>Public Transportation</span>
+                                                </div>
+                                                <div class="feature-item">
+                                                    <i class="fas fa-tree"></i>
+                                                    <span>Parks & Recreation</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="map-section">
+                                            <div class="map-header">
+                                                <h4>Location Map</h4>
+                                                <button class="btn btn-secondary" onclick="openFullMap()">
+                                                    <i class="fas fa-external-link-alt"></i>
+                                                    View Full Map
+                                                </button>
+                                            </div>
+                                            <div id="property-map" class="property-map"></div>
+                                        </div>
+
+                                        <div class="nearby-places">
+                                            <h4>Nearby Places</h4>
+                                            <div class="places-grid">
+                                                <div class="place-item">
+                                                    <i class="fas fa-school"></i>
+                                                    <div class="place-info">
+                                                        <span class="place-name">Lincoln Elementary</span>
+                                                        <span class="place-distance">0.3 miles</span>
+                                                    </div>
+                                                </div>
+                                                <div class="place-item">
+                                                    <i class="fas fa-hospital"></i>
+                                                    <div class="place-info">
+                                                        <span class="place-name">City Medical Center</span>
+                                                        <span class="place-distance">1.2 miles</span>
+                                                    </div>
+                                                </div>
+                                                <div class="place-item">
+                                                    <i class="fas fa-shopping-bag"></i>
+                                                    <div class="place-info">
+                                                        <span class="place-name">Downtown Mall</span>
+                                                        <span class="place-distance">0.8 miles</span>
+                                                    </div>
+                                                </div>
+                                                <div class="place-item">
+                                                    <i class="fas fa-train"></i>
+                                                    <div class="place-info">
+                                                        <span class="place-name">Metro Station</span>
+                                                        <span class="place-distance">0.5 miles</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="features-tab" class="tab-panel">
+                                    <h3>Property Features</h3>
+                                    <div class="features-grid">
+                                        <div class="feature-category">
+                                            <h4>Interior Features</h4>
+                                            <ul>
+                                                <li>Hardwood floors</li>
+                                                <li>Granite countertops</li>
+                                                <li>Stainless steel appliances</li>
+                                                <li>Walk-in closets</li>
+                                                <li>Fireplace</li>
+                                            </ul>
+                                        </div>
+                                        <div class="feature-category">
+                                            <h4>Exterior Features</h4>
+                                            <ul>
+                                                <li>Private backyard</li>
+                                                <li>Two-car garage</li>
+                                                <li>Covered patio</li>
+                                                <li>Landscaped garden</li>
+                                                <li>Sprinkler system</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="history-tab" class="tab-panel">
+                                    <h3>Price History</h3>
+                                    <div class="price-history">
+                                        <div class="history-item">
+                                            <span class="date">Dec 2023</span>
+                                            <span class="event">Listed</span>
+                                            <span class="price">$525,000</span>
+                                        </div>
+                                        <div class="history-item">
+                                            <span class="date">Nov 2023</span>
+                                            <span class="event">Price Reduced</span>
+                                            <span class="price">$535,000</span>
+                                        </div>
+                                        <div class="history-item">
+                                            <span class="date">Oct 2023</span>
+                                            <span class="event">Listed</span>
+                                            <span class="price">$550,000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Property Comparison Section -->
+            <section id="compare" class="content-section">
+                <div class="section-header">
+                    <h1>Property Comparison</h1>
+                    <p>Compare properties side by side to make informed decisions</p>
+                </div>
+
+                <div class="comparison-container">
+                    <div class="comparison-header">
+                        <div class="selected-properties-info">
+                            <span id="selected-count">0</span> properties selected for comparison
+                        </div>
+                        <div class="comparison-actions">
+                            <button class="btn btn-secondary" onclick="clearComparison()">
+                                <i class="fas fa-trash"></i>
+                                Clear All
+                            </button>
+                            <button class="btn btn-primary" onclick="showSection('search')" id="add-more-btn">
+                                <i class="fas fa-plus"></i>
+                                Add More Properties
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="comparison-content" id="comparison-content">
+                        <div class="no-properties-message">
+                            <div class="empty-state">
+                                <i class="fas fa-balance-scale"></i>
+                                <h3>No Properties Selected</h3>
+                                <p>Go to the Search section and select properties to compare them here.</p>
+                                <button class="btn btn-primary" onclick="showSection('search')">
+                                    <i class="fas fa-search"></i>
+                                    Browse Properties
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="comparison-table-container" style="display: none;">
+                            <div class="comparison-table">
+                                <div class="comparison-row comparison-header-row">
+                                    <div class="comparison-label">Property</div>
+                                    <div class="comparison-properties" id="comparison-properties-header"></div>
+                                </div>
+
+                                <div class="comparison-row">
+                                    <div class="comparison-label">Price</div>
+                                    <div class="comparison-properties" id="comparison-prices"></div>
+                                </div>
+
+                                <div class="comparison-row">
+                                    <div class="comparison-label">Price per sq ft</div>
+                                    <div class="comparison-properties" id="comparison-price-per-sqft"></div>
+                                </div>
+
+                                <div class="comparison-row">
+                                    <div class="comparison-label">Bedrooms</div>
+                                    <div class="comparison-properties" id="comparison-bedrooms"></div>
+                                </div>
+
+                                <div class="comparison-row">
+                                    <div class="comparison-label">Bathrooms</div>
+                                    <div class="comparison-properties" id="comparison-bathrooms"></div>
+                                </div>
+
+                                <div class="comparison-row">
+                                    <div class="comparison-label">Square Footage</div>
+                                    <div class="comparison-properties" id="comparison-sqft"></div>
+                                </div>
+
+                                <div class="comparison-row">
+                                    <div class="comparison-label">Year Built</div>
+                                    <div class="comparison-properties" id="comparison-year"></div>
+                                </div>
+
+                                <div class="comparison-row">
+                                    <div class="comparison-label">Location</div>
+                                    <div class="comparison-properties" id="comparison-locations"></div>
+                                </div>
+
+                                <div class="comparison-row">
+                                    <div class="comparison-label">Property Type</div>
+                                    <div class="comparison-properties" id="comparison-types"></div>
+                                </div>
+
+                                <div class="comparison-row">
+                                    <div class="comparison-label">Actions</div>
+                                    <div class="comparison-properties" id="comparison-actions"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Market Analysis Section -->
+            <section id="market-analysis" class="content-section">
+                <div class="section-header">
+                    <h1>Market Analysis</h1>
+                    <p>Comprehensive market insights and trends</p>
+                </div>
+
+                <div class="market-analysis-container">
+                    <div class="analysis-tabs">
+                        <button class="analysis-tab-btn active" onclick="showAnalysisTab('trends')">
+                            <i class="fas fa-chart-line"></i>
+                            Market Trends
+                        </button>
+                        <button class="analysis-tab-btn" onclick="showAnalysisTab('neighborhoods')">
+                            <i class="fas fa-map-marked-alt"></i>
+                            Neighborhoods
+                        </button>
+                        <button class="analysis-tab-btn" onclick="showAnalysisTab('investment')">
+                            <i class="fas fa-calculator"></i>
+                            Investment Calculator
+                        </button>
+                    </div>
+
+                    <div class="analysis-content">
+                        <!-- Market Trends Tab -->
+                        <div id="trends-tab" class="analysis-tab-panel active">
+                            <div class="trends-overview">
+                                <div class="trend-cards">
+                                    <div class="trend-card">
+                                        <div class="trend-icon">
+                                            <i class="fas fa-arrow-up"></i>
+                                        </div>
+                                        <div class="trend-info">
+                                            <h3>Median Home Price</h3>
+                                            <div class="trend-value">$485,000</div>
+                                            <div class="trend-change positive">+5.2% from last month</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="trend-card">
+                                        <div class="trend-icon">
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                        <div class="trend-info">
+                                            <h3>Days on Market</h3>
+                                            <div class="trend-value">28 days</div>
+                                            <div class="trend-change negative">-3 days from last month</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="trend-card">
+                                        <div class="trend-icon">
+                                            <i class="fas fa-home"></i>
+                                        </div>
+                                        <div class="trend-info">
+                                            <h3>Homes Sold</h3>
+                                            <div class="trend-value">1,247</div>
+                                            <div class="trend-change positive">+12% from last month</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="trend-card">
+                                        <div class="trend-icon">
+                                            <i class="fas fa-percentage"></i>
+                                        </div>
+                                        <div class="trend-info">
+                                            <h3>Price per Sq Ft</h3>
+                                            <div class="trend-value">$285</div>
+                                            <div class="trend-change positive">+2.8% from last month</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="price-chart-container">
+                                    <h3>Price Trends (Last 12 Months)</h3>
+                                    <div class="chart-placeholder">
+                                        <canvas id="priceChart" width="800" height="400"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Neighborhoods Tab -->
+                        <div id="neighborhoods-tab" class="analysis-tab-panel">
+                            <div class="neighborhoods-grid">
+                                <div class="neighborhood-card">
+                                    <div class="neighborhood-header">
+                                        <h3>Downtown District</h3>
+                                        <div class="neighborhood-rating">
+                                            <span class="rating-score">4.8</span>
+                                            <div class="rating-stars">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="neighborhood-stats">
+                                        <div class="stat-item">
+                                            <span class="stat-label">Median Price</span>
+                                            <span class="stat-value">$525,000</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Price Change</span>
+                                            <span class="stat-value positive">+8.2%</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Homes Sold</span>
+                                            <span class="stat-value">342</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="neighborhood-card">
+                                    <div class="neighborhood-header">
+                                        <h3>Riverside Heights</h3>
+                                        <div class="neighborhood-rating">
+                                            <span class="rating-score">4.6</span>
+                                            <div class="rating-stars">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="neighborhood-stats">
+                                        <div class="stat-item">
+                                            <span class="stat-label">Median Price</span>
+                                            <span class="stat-value">$445,000</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Price Change</span>
+                                            <span class="stat-value positive">+6.1%</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Homes Sold</span>
+                                            <span class="stat-value">198</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="neighborhood-card">
+                                    <div class="neighborhood-header">
+                                        <h3>Oak Valley</h3>
+                                        <div class="neighborhood-rating">
+                                            <span class="rating-score">4.4</span>
+                                            <div class="rating-stars">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="neighborhood-stats">
+                                        <div class="stat-item">
+                                            <span class="stat-label">Median Price</span>
+                                            <span class="stat-value">$385,000</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Price Change</span>
+                                            <span class="stat-value positive">+4.7%</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Homes Sold</span>
+                                            <span class="stat-value">156</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Investment Calculator Tab -->
+                        <div id="investment-tab" class="analysis-tab-panel">
+                            <div class="investment-calculator">
+                                <div class="calculator-form">
+                                    <h3>Investment Analysis Calculator</h3>
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="purchase-price">Purchase Price</label>
+                                            <input type="number" id="purchase-price" placeholder="500000" value="500000">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="down-payment">Down Payment (%)</label>
+                                            <input type="number" id="down-payment" placeholder="20" value="20">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="interest-rate">Interest Rate (%)</label>
+                                            <input type="number" id="interest-rate" placeholder="6.5" value="6.5" step="0.1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="loan-term">Loan Term (years)</label>
+                                            <input type="number" id="loan-term" placeholder="30" value="30">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="monthly-rent">Monthly Rent</label>
+                                            <input type="number" id="monthly-rent" placeholder="2500" value="2500">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="monthly-expenses">Monthly Expenses</label>
+                                            <input type="number" id="monthly-expenses" placeholder="800" value="800">
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="calculateInvestment()">
+                                        <i class="fas fa-calculator"></i>
+                                        Calculate Returns
+                                    </button>
+                                </div>
+
+                                <div class="calculation-results" id="calculation-results">
+                                    <h3>Investment Analysis Results</h3>
+                                    <div class="results-grid">
+                                        <div class="result-card">
+                                            <div class="result-label">Monthly Cash Flow</div>
+                                            <div class="result-value" id="cash-flow">$0</div>
+                                        </div>
+                                        <div class="result-card">
+                                            <div class="result-label">Annual ROI</div>
+                                            <div class="result-value" id="annual-roi">0%</div>
+                                        </div>
+                                        <div class="result-card">
+                                            <div class="result-label">Monthly Mortgage</div>
+                                            <div class="result-value" id="monthly-mortgage">$0</div>
+                                        </div>
+                                        <div class="result-card">
+                                            <div class="result-label">Total Cash Needed</div>
+                                            <div class="result-value" id="total-cash">$0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

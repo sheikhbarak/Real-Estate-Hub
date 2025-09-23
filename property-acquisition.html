@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Acquisition Workflow - Real Estate Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .workflow-nav {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            overflow-x: auto;
+        }
+
+        .workflow-tab {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .workflow-tab.active {
+            background: white;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .workflow-tab:hover {
+            background: #e9ecef;
+            color: #2c3e50;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .workflow-step {
+            display: none;
+        }
+
+        .workflow-step.active {
+            display: block;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .step-info h2 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .step-info p {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            color: #6c757d;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        }
+
+        .comparison-tool {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .comparison-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .comparison-header h3 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .property-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            color: #2c3e50;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .input-group input, .input-group select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .comparison-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .result-card h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f2f6;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .progress-tracker {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            border: 1px solid #e9ecef;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-header h3 {
+            color: #2c3e50;
+        }
+
+        .progress-percentage {
+            color: #3498db;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            transition: width 0.3s ease;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f2f6;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox.checked {
+            background: #3498db;
+            border-color: #3498db;
+            color: white;
+        }
+
+        .checklist-text {
+            color: #2c3e50;
+            flex: 1;
+        }
+
+        .checklist-text.completed {
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .workflow-nav {
+                flex-direction: column;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .property-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 Property Acquisition Workflow</h1>
+            <p>Your complete guide to successful property acquisition</p>
+        </div>
+
+        <div class="workflow-nav">
+            <button class="workflow-tab active" onclick="showStep('preparation')">1. Preparation</button>
+            <button class="workflow-tab" onclick="showStep('search')">2. Property Search</button>
+            <button class="workflow-tab" onclick="showStep('analysis')">3. Analysis</button>
+            <button class="workflow-tab" onclick="showStep('financing')">4. Financing</button>
+            <button class="workflow-tab" onclick="showStep('offer')">5. Making Offer</button>
+            <button class="workflow-tab" onclick="showStep('closing')">6. Closing</button>
+            <button class="workflow-tab" onclick="showStep('comparison')">Property Comparison</button>
+        </div>
+
+        <div class="content">
+            <!-- Step 1: Preparation -->
+            <div id="preparation" class="workflow-step active">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-info">
+                        <h2>Preparation Phase</h2>
+                        <p>Get your finances and goals in order before starting your search</p>
+                    </div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">💰</div>
+                        <h3>Financial Assessment</h3>
+                        <p>Determine your budget, down payment, and monthly payment capacity.</p>
+                        <button class="btn" onclick="openFinancialCalculator()">Calculate Budget</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">📋</div>
+                        <h3>Pre-Approval</h3>
+                        <p>Get pre-approved for a mortgage to strengthen your buying position.</p>
+                        <a href="mortgage-service.html" class="btn">Get Pre-Approved</a>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🎯</div>
+                        <h3>Define Goals</h3>
+                        <p>Clarify your property requirements, location preferences, and timeline.</p>
+                        <button class="btn" onclick="openGoalsWizard()">Set Goals</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">📄</div>
+                        <h3>Document Preparation</h3>
+                        <p>Gather all necessary documents for the buying process.</p>
+                        <button class="btn" onclick="showDocumentChecklist()">View Checklist</button>
+                    </div>
+                </div>
+
+                <div class="progress-tracker">
+                    <div class="progress-header">
+                        <h3>Preparation Progress</h3>
+                        <span class="progress-percentage" id="prep-progress">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="prep-fill" style="width: 0%"></div>
+                    </div>
+                    <ul class="checklist" id="prep-checklist">
+                        <li>
+                            <div class="checkbox" onclick="toggleCheck(this)"></div>
+                            <span class="checklist-text">Complete financial assessment</span>
+                        </li>
+                        <li>
+                            <div class="checkbox" onclick="toggleCheck(this)"></div>
+                            <span class="checklist-text">Get pre-approved for mortgage</span>
+                        </li>
+                        <li>
+                            <div class="checkbox" onclick="toggleCheck(this)"></div>
+                            <span class="checklist-text">Define property requirements</span>
+                        </li>
+                        <li>
+                            <div class="checkbox" onclick="toggleCheck(this)"></div>
+                            <span class="checklist-text">Gather required documents</span>
+                        </li>
+                        <li>
+                            <div class="checkbox" onclick="toggleCheck(this)"></div>
+                            <span class="checklist-text">Research target neighborhoods</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 2: Property Search -->
+            <div id="search" class="workflow-step">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-info">
+                        <h2>Property Search</h2>
+                        <p>Find and shortlist properties that meet your criteria</p>
+                    </div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">🔍</div>
+                        <h3>MLS Search</h3>
+                        <p>Search the Multiple Listing Service for available properties.</p>
+                        <a href="index.html" class="btn">Search Properties</a>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">📍</div>
+                        <h3>Neighborhood Analysis</h3>
+                        <p>Research schools, amenities, and market trends in target areas.</p>
+                        <button class="btn" onclick="analyzeNeighborhood()">Analyze Areas</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🏠</div>
+                        <h3>Property Tracking</h3>
+                        <p>Save and track interesting properties for comparison.</p>
+                        <button class="btn" onclick="openPropertyTracker()">Track Properties</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🔔</div>
+                        <h3>Market Alerts</h3>
+                        <p>Set up alerts for new listings matching your criteria.</p>
+                        <button class="btn" onclick="setupAlerts()">Setup Alerts</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Analysis -->
+            <div id="analysis" class="workflow-step">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-info">
+                        <h2>Property Analysis</h2>
+                        <p>Thoroughly evaluate properties before making decisions</p>
+                    </div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">📊</div>
+                        <h3>Market Analysis</h3>
+                        <p>Compare property values and market trends in the area.</p>
+                        <button class="btn" onclick="runMarketAnalysis()">Analyze Market</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🏗️</div>
+                        <h3>Property Inspection</h3>
+                        <p>Schedule professional inspections and evaluations.</p>
+                        <button class="btn" onclick="scheduleInspection()">Schedule Inspection</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">💡</div>
+                        <h3>Investment Analysis</h3>
+                        <p>Calculate ROI, cash flow, and investment potential.</p>
+                        <button class="btn" onclick="analyzeInvestment()">Investment Calculator</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">⚖️</div>
+                        <h3>Risk Assessment</h3>
+                        <p>Evaluate potential risks and mitigation strategies.</p>
+                        <button class="btn" onclick="assessRisks()">Assess Risks</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Financing -->
+            <div id="financing" class="workflow-step">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div class="step-info">
+                        <h2>Financing Options</h2>
+                        <p>Choose the best financing strategy for your purchase</p>
+                    </div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">🏦</div>
+                        <h3>Mortgage Options</h3>
+                        <p>Compare different loan types and lenders.</p>
+                        <a href="mortgage-service.html" class="btn">Compare Mortgages</a>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">💵</div>
+                        <h3>Cash Offer</h3>
+                        <p>Get instant cash offers through our Opendoor service.</p>
+                        <a href="opendoor-service.html" class="btn">Get Cash Offer</a>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🤖</div>
+                        <h3>AI Financing Assistant</h3>
+                        <p>Get personalized financing advice from our AI.</p>
+                        <a href="ai-chat.html" class="btn">Chat with AI</a>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">📈</div>
+                        <h3>Rate Comparison</h3>
+                        <p>Compare current interest rates and terms.</p>
+                        <button class="btn" onclick="compareRates()">Compare Rates</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Making Offer -->
+            <div id="offer" class="workflow-step">
+                <div class="step-header">
+                    <div class="step-number">5</div>
+                    <div class="step-info">
+                        <h2>Making an Offer</h2>
+                        <p>Craft competitive offers and negotiate terms</p>
+                    </div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">💰</div>
+                        <h3>Offer Strategy</h3>
+                        <p>Develop a competitive offer strategy based on market conditions.</p>
+                        <button class="btn" onclick="planOfferStrategy()">Plan Strategy</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">📝</div>
+                        <h3>Offer Preparation</h3>
+                        <p>Prepare all necessary documents and contingencies.</p>
+                        <button class="btn" onclick="prepareOffer()">Prepare Offer</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🤝</div>
+                        <h3>Negotiation</h3>
+                        <p>Navigate counteroffers and negotiate terms.</p>
+                        <button class="btn" onclick="negotiationGuide()">Negotiation Guide</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">✅</div>
+                        <h3>Offer Acceptance</h3>
+                        <p>Handle offer acceptance and next steps.</p>
+                        <button class="btn" onclick="offerAccepted()">Next Steps</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6: Closing -->
+            <div id="closing" class="workflow-step">
+                <div class="step-header">
+                    <div class="step-number">6</div>
+                    <div class="step-info">
+                        <h2>Closing Process</h2>
+                        <p>Complete the final steps to ownership</p>
+                    </div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">🔍</div>
+                        <h3>Final Inspection</h3>
+                        <p>Conduct final walkthrough and inspection.</p>
+                        <button class="btn" onclick="finalInspection()">Schedule Walkthrough</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">📋</div>
+                        <h3>Closing Documents</h3>
+                        <p>Review and sign all closing documents.</p>
+                        <button class="btn" onclick="reviewDocuments()">Document Review</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🔑</div>
+                        <h3>Key Transfer</h3>
+                        <p>Complete the transaction and receive keys.</p>
+                        <button class="btn" onclick="completeClosing()">Complete Closing</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🎉</div>
+                        <h3>Post-Closing</h3>
+                        <p>Handle post-closing tasks and move-in preparation.</p>
+                        <button class="btn" onclick="postClosing()">Post-Closing Tasks</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property Comparison Tool -->
+            <div id="comparison" class="workflow-step">
+                <div class="step-header">
+                    <div class="step-number">⚖️</div>
+                    <div class="step-info">
+                        <h2>Property Comparison Tool</h2>
+                        <p>Compare multiple properties side by side</p>
+                    </div>
+                </div>
+
+                <div class="comparison-tool">
+                    <div class="comparison-header">
+                        <h3>Compare Properties</h3>
+                        <p>Enter details for up to 3 properties to compare</p>
+                    </div>
+
+                    <div class="property-inputs">
+                        <div class="input-group">
+                            <label>Property 1 Address</label>
+                            <input type="text" id="prop1-address" placeholder="Enter address">
+                        </div>
+                        <div class="input-group">
+                            <label>Price</label>
+                            <input type="number" id="prop1-price" placeholder="Purchase price">
+                        </div>
+                        <div class="input-group">
+                            <label>Square Feet</label>
+                            <input type="number" id="prop1-sqft" placeholder="Square footage">
+                        </div>
+                        <div class="input-group">
+                            <label>Bedrooms</label>
+                            <input type="number" id="prop1-beds" placeholder="Number of bedrooms">
+                        </div>
+                        <div class="input-group">
+                            <label>Bathrooms</label>
+                            <input type="number" id="prop1-baths" placeholder="Number of bathrooms">
+                        </div>
+                        <div class="input-group">
+                            <label>Year Built</label>
+                            <input type="number" id="prop1-year" placeholder="Year built">
+                        </div>
+                    </div>
+
+                    <div class="property-inputs">
+                        <div class="input-group">
+                            <label>Property 2 Address</label>
+                            <input type="text" id="prop2-address" placeholder="Enter address">
+                        </div>
+                        <div class="input-group">
+                            <label>Price</label>
+                            <input type="number" id="prop2-price" placeholder="Purchase price">
+                        </div>
+                        <div class="input-group">
+                            <label>Square Feet</label>
+                            <input type="number" id="prop2-sqft" placeholder="Square footage">
+                        </div>
+                        <div class="input-group">
+                            <label>Bedrooms</label>
+                            <input type="number" id="prop2-beds" placeholder="Number of bedrooms">
+                        </div>
+                        <div class="input-group">
+                            <label>Bathrooms</label>
+                            <input type="number" id="prop2-baths" placeholder="Number of bathrooms">
+                        </div>
+                        <div class="input-group">
+                            <label>Year Built</label>
+                            <input type="number" id="prop2-year" placeholder="Year built">
+                        </div>
+                    </div>
+
+                    <div class="property-inputs">
+                        <div class="input-group">
+                            <label>Property 3 Address</label>
+                            <input type="text" id="prop3-address" placeholder="Enter address">
+                        </div>
+                        <div class="input-group">
+                            <label>Price</label>
+                            <input type="number" id="prop3-price" placeholder="Purchase price">
+                        </div>
+                        <div class="input-group">
+                            <label>Square Feet</label>
+                            <input type="number" id="prop3-sqft" placeholder="Square footage">
+                        </div>
+                        <div class="input-group">
+                            <label>Bedrooms</label>
+                            <input type="number" id="prop3-beds" placeholder="Number of bedrooms">
+                        </div>
+                        <div class="input-group">
+                            <label>Bathrooms</label>
+                            <input type="number" id="prop3-baths" placeholder="Number of bathrooms">
+                        </div>
+                        <div class="input-group">
+                            <label>Year Built</label>
+                            <input type="number" id="prop3-year" placeholder="Year built">
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin: 30px 0;">
+                        <button class="btn" onclick="compareProperties()">Compare Properties</button>
+                        <button class="btn btn-secondary" onclick="clearComparison()">Clear All</button>
+                    </div>
+
+                    <div class="comparison-results" id="comparison-results" style="display: none;">
+                        <div class="result-card">
+                            <h4>Property 1</h4>
+                            <div id="prop1-results"></div>
+                        </div>
+                        <div class="result-card">
+                            <h4>Property 2</h4>
+                            <div id="prop2-results"></div>
+                        </div>
+                        <div class="result-card">
+                            <h4>Property 3</h4>
+                            <div id="prop3-results"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showStep(stepId) {
+            // Hide all steps
+            const steps = document.querySelectorAll('.workflow-step');
+            steps.forEach(step => step.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.workflow-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected step
+            document.getElementById(stepId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function toggleCheck(checkbox) {
+            checkbox.classList.toggle('checked');
+            const text = checkbox.nextElementSibling;
+            text.classList.toggle('completed');
+            
+            if (checkbox.classList.contains('checked')) {
+                checkbox.innerHTML = '✓';
+            } else {
+                checkbox.innerHTML = '';
+            }
+            
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const checklist = document.getElementById('prep-checklist');
+            const checkboxes = checklist.querySelectorAll('.checkbox');
+            const checked = checklist.querySelectorAll('.checkbox.checked');
+            const percentage = Math.round((checked.length / checkboxes.length) * 100);
+            
+            document.getElementById('prep-progress').textContent = percentage + '%';
+            document.getElementById('prep-fill').style.width = percentage + '%';
+        }
+
+        function compareProperties() {
+            const results = document.getElementById('comparison-results');
+            results.style.display = 'grid';
+            
+            for (let i = 1; i <= 3; i++) {
+                const address = document.getElementById(`prop${i}-address`).value;
+                const price = parseFloat(document.getElementById(`prop${i}-price`).value) || 0;
+                const sqft = parseFloat(document.getElementById(`prop${i}-sqft`).value) || 0;
+                const beds = parseInt(document.getElementById(`prop${i}-beds`).value) || 0;
+                const baths = parseFloat(document.getElementById(`prop${i}-baths`).value) || 0;
+                const year = parseInt(document.getElementById(`prop${i}-year`).value) || 0;
+                
+                const pricePerSqft = sqft > 0 ? price / sqft : 0;
+                const age = new Date().getFullYear() - year;
+                
+                const resultsHtml = `
+                    <div class="metric">
+                        <span class="metric-label">Address</span>
+                        <span class="metric-value">${address || 'Not specified'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Price</span>
+                        <span class="metric-value">$${price.toLocaleString()}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Price/Sq Ft</span>
+                        <span class="metric-value">$${pricePerSqft.toFixed(0)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Square Feet</span>
+                        <span class="metric-value">${sqft.toLocaleString()}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Bedrooms</span>
+                        <span class="metric-value">${beds}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Bathrooms</span>
+                        <span class="metric-value">${baths}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Age</span>
+                        <span class="metric-value">${age} years</span>
+                    </div>
+                `;
+                
+                document.getElementById(`prop${i}-results`).innerHTML = resultsHtml;
+            }
+        }
+
+        function clearComparison() {
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`prop${i}-address`).value = '';
+                document.getElementById(`prop${i}-price`).value = '';
+                document.getElementById(`prop${i}-sqft`).value = '';
+                document.getElementById(`prop${i}-beds`).value = '';
+                document.getElementById(`prop${i}-baths`).value = '';
+                document.getElementById(`prop${i}-year`).value = '';
+            }
+            document.getElementById('comparison-results').style.display = 'none';
+        }
+
+        // Placeholder functions for various actions
+        function openFinancialCalculator() {
+            alert('Opening financial calculator...');
+        }
+
+        function openGoalsWizard() {
+            alert('Opening goals wizard...');
+        }
+
+        function showDocumentChecklist() {
+            alert('Showing document checklist...');
+        }
+
+        function analyzeNeighborhood() {
+            alert('Analyzing neighborhood data...');
+        }
+
+        function openPropertyTracker() {
+            alert('Opening property tracker...');
+        }
+
+        function setupAlerts() {
+            alert('Setting up market alerts...');
+        }
+
+        function runMarketAnalysis() {
+            alert('Running market analysis...');
+        }
+
+        function scheduleInspection() {
+            alert('Scheduling property inspection...');
+        }
+
+        function analyzeInvestment() {
+            alert('Opening investment calculator...');
+        }
+
+        function assessRisks() {
+            alert('Assessing property risks...');
+        }
+
+        function compareRates() {
+            alert('Comparing interest rates...');
+        }
+
+        function planOfferStrategy() {
+            alert('Planning offer strategy...');
+        }
+
+        function prepareOffer() {
+            alert('Preparing offer documents...');
+        }
+
+        function negotiationGuide() {
+            alert('Opening negotiation guide...');
+        }
+
+        function offerAccepted() {
+            alert('Congratulations! Here are your next steps...');
+        }
+
+        function finalInspection() {
+            alert('Scheduling final inspection...');
+        }
+
+        function reviewDocuments() {
+            alert('Reviewing closing documents...');
+        }
+
+        function completeClosing() {
+            alert('Completing closing process...');
+        }
+
+        function postClosing() {
+            alert('Showing post-closing tasks...');
+        }
+    </script>
+</body>
+</html>

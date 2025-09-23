@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opendoor Cash Offers - Real Estate Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .opendoor-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #00d4aa 0%, #00a693 100%);
+            min-height: 100vh;
+        }
+
+        .opendoor-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .opendoor-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .opendoor-header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .opendoor-logo {
+            width: 120px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #00a693;
+            margin-bottom: 20px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-section, .info-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .calculator-section h2, .info-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #00a693;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #00d4aa, #00a693);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 170, 0.4);
+        }
+
+        .offer-result {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #00a693;
+            display: none;
+        }
+
+        .offer-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00a693;
+            margin-bottom: 10px;
+        }
+
+        .offer-details {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .benefits-list li {
+            padding: 10px 0;
+            color: #555;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .benefits-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00a693;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .process-steps {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .process-steps h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            transition: transform 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00d4aa, #00a693);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 0 auto 15px;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .step-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #00a693;
+            background: transparent;
+            color: #00a693;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #00a693;
+            color: white;
+        }
+
+        .action-btn.primary {
+            background: #00a693;
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: #00d4aa;
+        }
+
+        @media (max-width: 768px) {
+            .opendoor-container {
+                padding: 10px;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='buyer-services.html'">
+        ← Back to Services
+    </button>
+
+    <div class="opendoor-container">
+        <div class="opendoor-header">
+            <div class="opendoor-logo">Opendoor</div>
+            <h1>💰 Instant Cash Offers</h1>
+            <p class="subtitle">Get a competitive cash offer on any property in minutes</p>
+        </div>
+
+        <div class="main-content">
+            <div class="calculator-section" id="calculator">
+                <h2>Get Your Cash Offer</h2>
+                <form id="cashOfferForm">
+                    <div class="form-group">
+                        <label for="propertyAddress">Property Address</label>
+                        <input type="text" id="propertyAddress" placeholder="Enter full property address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="propertyType">Property Type</label>
+                        <select id="propertyType" required>
+                            <option value="">Select property type</option>
+                            <option value="single-family">Single Family Home</option>
+                            <option value="condo">Condominium</option>
+                            <option value="townhouse">Townhouse</option>
+                            <option value="duplex">Duplex</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bedrooms">Bedrooms</label>
+                        <select id="bedrooms" required>
+                            <option value="">Select bedrooms</option>
+                            <option value="1">1 Bedroom</option>
+                            <option value="2">2 Bedrooms</option>
+                            <option value="3">3 Bedrooms</option>
+                            <option value="4">4 Bedrooms</option>
+                            <option value="5+">5+ Bedrooms</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bathrooms">Bathrooms</label>
+                        <select id="bathrooms" required>
+                            <option value="">Select bathrooms</option>
+                            <option value="1">1 Bathroom</option>
+                            <option value="1.5">1.5 Bathrooms</option>
+                            <option value="2">2 Bathrooms</option>
+                            <option value="2.5">2.5 Bathrooms</option>
+                            <option value="3">3 Bathrooms</option>
+                            <option value="3.5+">3.5+ Bathrooms</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="squareFootage">Square Footage</label>
+                        <input type="number" id="squareFootage" placeholder="e.g., 1500" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="yearBuilt">Year Built</label>
+                        <input type="number" id="yearBuilt" placeholder="e.g., 1995" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="condition">Property Condition</label>
+                        <select id="condition" required>
+                            <option value="">Select condition</option>
+                            <option value="excellent">Excellent</option>
+                            <option value="good">Good</option>
+                            <option value="fair">Fair</option>
+                            <option value="needs-work">Needs Work</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">
+                        Get Instant Cash Offer
+                    </button>
+                </form>
+                
+                <div id="offerResult" class="offer-result">
+                    <div class="offer-amount" id="offerAmount">$0</div>
+                    <div class="offer-details" id="offerDetails"></div>
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="requestDetailedAnalysis()">
+                            Detailed Analysis
+                        </button>
+                        <button class="action-btn primary" onclick="acceptOffer()">
+                            Accept Offer
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h2>Why Choose Opendoor?</h2>
+                <ul class="benefits-list">
+                    <li>Instant cash offers with no financing contingencies</li>
+                    <li>Close in as little as 14 days</li>
+                    <li>No showings, open houses, or buyer negotiations</li>
+                    <li>Transparent pricing with upfront fees</li>
+                    <li>Flexible closing dates to fit your timeline</li>
+                    <li>Professional property inspections included</li>
+                    <li>Dedicated support throughout the process</li>
+                    <li>Competitive market-based pricing</li>
+                </ul>
+                
+                <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                    <h3 style="color: #333; margin-bottom: 15px;">Market Advantage</h3>
+                    <p style="color: #666; line-height: 1.6;">
+                        Our cash offers are typically 96-99% of market value, giving you the certainty 
+                        and speed you need while maintaining competitive pricing. No waiting for buyer 
+                        financing or deal complications.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="process-steps">
+            <h2>How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Submit Property Info</div>
+                    <div class="step-description">
+                        Provide basic details about your property using our simple form
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Get Instant Offer</div>
+                    <div class="step-description">
+                        Receive a competitive cash offer within minutes based on market data
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Schedule Inspection</div>
+                    <div class="step-description">
+                        We'll arrange a professional inspection to finalize the offer
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Close Fast</div>
+                    <div class="step-description">
+                        Choose your closing date and get paid in as little as 14 days
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('cashOfferForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateCashOffer();
+        });
+
+        function calculateCashOffer() {
+            const formData = {
+                address: document.getElementById('propertyAddress').value,
+                type: document.getElementById('propertyType').value,
+                bedrooms: document.getElementById('bedrooms').value,
+                bathrooms: document.getElementById('bathrooms').value,
+                sqft: parseInt(document.getElementById('squareFootage').value),
+                yearBuilt: parseInt(document.getElementById('yearBuilt').value),
+                condition: document.getElementById('condition').value
+            };
+
+            // Simulate API call with loading
+            const calculateBtn = document.querySelector('.calculate-btn');
+            const originalText = calculateBtn.textContent;
+            calculateBtn.textContent = 'Calculating...';
+            calculateBtn.disabled = true;
+
+            setTimeout(() => {
+                const offer = generateCashOffer(formData);
+                displayOffer(offer);
+                calculateBtn.textContent = originalText;
+                calculateBtn.disabled = false;
+            }, 2000);
+        }
+
+        function generateCashOffer(data) {
+            // Base price calculation (simplified algorithm)
+            let basePrice = data.sqft * 150; // $150 per sq ft base
+            
+            // Adjust for bedrooms/bathrooms
+            basePrice += (parseInt(data.bedrooms) * 15000);
+            basePrice += (parseFloat(data.bathrooms) * 10000);
+            
+            // Age adjustment
+            const age = 2024 - data.yearBuilt;
+            if (age < 10) basePrice *= 1.1;
+            else if (age > 30) basePrice *= 0.9;
+            
+            // Condition adjustment
+            const conditionMultipliers = {
+                'excellent': 1.05,
+                'good': 1.0,
+                'fair': 0.95,
+                'needs-work': 0.85
+            };
+            basePrice *= conditionMultipliers[data.condition] || 1.0;
+            
+            // Property type adjustment
+            const typeMultipliers = {
+                'single-family': 1.0,
+                'condo': 0.9,
+                'townhouse': 0.95,
+                'duplex': 1.1
+            };
+            basePrice *= typeMultipliers[data.type] || 1.0;
+            
+            // Add some randomness for realism
+            const variance = 0.05; // 5% variance
+            const randomFactor = 1 + (Math.random() - 0.5) * variance;
+            basePrice *= randomFactor;
+            
+            // Opendoor typically offers 96-99% of market value
+            const offerPercentage = 0.96 + (Math.random() * 0.03);
+            const cashOffer = Math.round(basePrice * offerPercentage);
+            
+            return {
+                amount: cashOffer,
+                marketValue: Math.round(basePrice),
+                percentage: Math.round(offerPercentage * 100),
+                fees: Math.round(cashOffer * 0.05), // 5% service fee
+                netAmount: Math.round(cashOffer * 0.95),
+                closingDays: Math.floor(Math.random() * 7) + 14 // 14-21 days
+            };
+        }
+
+        function displayOffer(offer) {
+            const resultDiv = document.getElementById('offerResult');
+            const amountDiv = document.getElementById('offerAmount');
+            const detailsDiv = document.getElementById('offerDetails');
+            
+            amountDiv.textContent = `$${offer.amount.toLocaleString()}`;
+            
+            detailsDiv.innerHTML = `
+                <strong>Cash Offer Details:</strong><br>
+                • Estimated Market Value: $${offer.marketValue.toLocaleString()}<br>
+                • Offer Percentage: ${offer.percentage}% of market value<br>
+                • Service Fee: $${offer.fees.toLocaleString()}<br>
+                • Net Amount to You: $${offer.netAmount.toLocaleString()}<br>
+                • Estimated Closing: ${offer.closingDays} days<br><br>
+                <em>This is a preliminary offer. Final offer subject to property inspection.</em>
+            `;
+            
+            resultDiv.style.display = 'block';
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function requestDetailedAnalysis() {
+            alert('Detailed property analysis will be provided by our team within 24 hours. You will receive a comprehensive report via email.');
+        }
+
+        function acceptOffer() {
+            if (confirm('Are you ready to proceed with this cash offer? Our team will contact you within 2 hours to schedule the property inspection.')) {
+                alert('Congratulations! Your offer has been accepted. Our team will contact you shortly to schedule the next steps.');
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if we should scroll to calculator
+            if (window.location.hash === '#calculator') {
+                document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // Add entrance animations
+            const cards = document.querySelectorAll('.step-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
